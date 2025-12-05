@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User List - View all registered users">
+    <title>User List | Department Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Header with Profile Corner -->
+    <header class="header">
+        <a href="profile.html" class="logo">
+            <div class="logo-icon">🎓</div>
+            <span class="logo-text">DeptPortal</span>
+        </a>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="profile.html">My Profile</a></li>
+                <li><a href="users.html" class="active">Users</a></li>
+            </ul>
+        </nav>
+
+        <!-- Profile Corner -->
+        <div class="profile-corner" id="profileCorner">
+            <button class="profile-trigger" onclick="toggleProfileDropdown()">
+                <div class="profile-avatar" id="headerAvatar">AD</div>
+                <div class="profile-info">
+                    <div class="profile-name" id="headerName">Admin User</div>
+                    <div class="profile-role" id="headerRole">Admin</div>
+                </div>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+
+            <div class="profile-dropdown">
+                <a href="profile.html" class="dropdown-item">
+                    <span>👤</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item danger" onclick="handleLogout(event)">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="users-page">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">User Directory</h1>
+                <p class="page-subtitle">Browse and search all registered users in the department (Admin Only)</p>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="users-toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by name or email..."
+                        onkeyup="handleSearch()">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterUsers('all', this)">All</button>
+                    <button class="filter-btn" onclick="filterUsers('active', this)">Active</button>
+                    <button class="filter-btn" onclick="filterUsers('inactive', this)">Inactive</button>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="users-table-card glass-card">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <div class="pagination-info">
+                        Showing <strong id="showingCount">1-10</strong> of <strong id="totalCount">25</strong> users
+                    </div>
+                    <div class="pagination-buttons">
+                        <button class="page-btn" onclick="changePage(-1)" id="prevBtn">←</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn" onclick="changePage(1)" id="nextBtn">→</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ============================================
+        // ADMIN ACCESS CONTROL - Only admins can view this page
+        // ============================================
+       /* function checkAdminAccess() {
+            const userData = localStorage.getItem('user');
+
+            if (!userData) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+                return false;
+            }
+
+            const user = JSON.parse(userData);
+
+            // Check if user has admin role
+            if (user.role !== 'Admin' && user.role !== 'admin') {
+                // Show access denied message and redirect
+                alert('⛔ Access Denied!\n\nThis page is only accessible to Administrators.\n\nPlease login as Admin to view the User List.');
+                window.location.href = 'profile.html';
+                return false;
+            }
+
+            return true;
+        }*/
+    
+        // Sample users data
+        const usersData = [
+            { id: 1, name: 'Aradhya N', email: 'aradhya.N@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-01-15' },
+            { id: 2, name: 'Manoj G', email: 'manoj.G@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-01-20' },
+            { id: 3, name: 'Punith Raj', email: 'punith.raj@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-02-01' },
+            { id: 4, name: 'Shravan S', email: 'shravan.s@college.edu', department: 'Computer Science', role: 'TA', status: 'active', joined: '2023-08-10' },
+            { id: 5, name: 'Girish K', email: 'girish.k@college.edu', department: 'Computer Science', role: 'Student', status: 'inactive', joined: '2024-01-25' },
+            { id: 6, name: 'Madan Sunil Chimal', email: 'madan.sunil.chimal@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-03-05' },
+            { id: 7, name: 'Shruthi M', email: 'shruthi.m@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-02-15' },
+            { id: 8, name: 'Syed Mushraf', email: 'syed.mushraf@college.edu', department: 'Computer Science', role: 'Student', status: 'pending', joined: '2024-03-20' },
+            { id: 9, name: 'Dr.Bhavani H ', email: 'bhavani.h @college.edu', department: 'Computer Science', role: 'Professor', status: 'active', joined: '2020-06-01' },
+            { id: 10, name: 'Kavya H M', email: 'kavya.h.m@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-01-10' },
+            { id: 11, name: 'Mohit J', email: 'mohit.j@college.edu', department: 'Computer Science', role: 'Student', status: 'inactive', joined: '2023-08-15' },
+            { id: 12, name: 'Neha A', email: 'neha.a@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-02-28' },
+            { id: 13, name: 'Siddharth R', email: 'sid.rao@college.edu', department: 'Computer Science', role: 'Lab Assistant', status: 'active', joined: '2022-07-01' },
+            { id: 14, name: 'Tanvi S', email: 'tanvi.shah@college.edu', department: 'Computer Science', role: 'Student', status: 'active', joined: '2024-01-18' },
+            { id: 15, name: 'Varun M', email: 'varun.m@college.edu', department: 'Computer Science', role: 'Student', status: 'pending', joined: '2024-03-25' },
+        ];
+
+        let filteredUsers = [...usersData];
+        let currentPage = 1;
+        const usersPerPage = 10;
+
+        // Initialize page - with admin access check
+        function initializePage() {
+            // CHECK ADMIN ACCESS FIRST
+            if (!checkAdminAccess()) {
+                return; // Stop if not admin
+            }
+
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                document.getElementById('headerName').textContent = user.name || 'Admin';
+                document.getElementById('headerRole').textContent = user.role || 'Admin';
+                document.getElementById('headerAvatar').textContent = getInitials(user.name || 'Admin');
+            }
+            renderUsers();
+        }
+
+        // Get initials from name
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        // Get random gradient colors for avatars
+        function getAvatarStyle(id) {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+            ];
+            return gradients[id % gradients.length];
+        }
+
+        // Render users table
+        function renderUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            const start = (currentPage - 1) * usersPerPage;
+            const end = start + usersPerPage;
+            const pageUsers = filteredUsers.slice(start, end);
+
+            tbody.innerHTML = pageUsers.map(user => `
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="user-cell-avatar" style="background: ${getAvatarStyle(user.id)}">
+                ${getInitials(user.name)}
+              </div>
+              <div class="user-cell-info">
+                <span class="user-cell-name">${user.name}</span>
+                <span class="user-cell-email">${user.email}</span>
+              </div>
+            </div>
+          </td>
+          <td>${user.department}</td>
+          <td><span class="role-badge">${user.role}</span></td>
+          <td>
+            <span class="status-badge ${user.status}">
+              <span class="status-dot"></span>
+              ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+            </span>
+          </td>
+          <td>${formatDate(user.joined)}</td>
+        </tr>
+      `).join('');
+
+            // Update pagination info
+            document.getElementById('showingCount').textContent =
+                `${start + 1}-${Math.min(end, filteredUsers.length)}`;
+            document.getElementById('totalCount').textContent = filteredUsers.length;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = end >= filteredUsers.length;
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Handle search
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            filteredUsers = usersData.filter(user =>
+                user.name.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm)
+            );
+            currentPage = 1;
+            renderUsers();
+        }
+
+        // Filter users by status
+        function filterUsers(status, btn) {
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (status === 'all') {
+                filteredUsers = [...usersData];
+            } else {
+                filteredUsers = usersData.filter(user => user.status === status);
+            }
+            currentPage = 1;
+            renderUsers();
+        }
+
+        // Change page
+        function changePage(direction) {
+            currentPage += direction;
+            renderUsers();
+        }
+
+        // Toggle profile dropdown
+        function toggleProfileDropdown() {
+            const corner = document.getElementById('profileCorner');
+            corner.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const corner = document.getElementById('profileCorner');
+            if (!corner.contains(event.target)) {
+                corner.classList.remove('active');
+            }
+        });
+
+        // Handle logout
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize on load
+        window.onload = initializePage;
+    </script>
+</body>
+
+</html>
