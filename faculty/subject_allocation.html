@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subject Allocation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4 bg-light">
+    <div class="container" style="max-width: 600px;">
+        <button onclick="history.back()" class="btn btn-light mb-3">Back</button>
+        <div class="card p-4 border-0 shadow-sm">
+            <h3>Subject Allocation</h3>
+            <p>Assign subjects to <b id="fname"></b></p>
+            <div class="mb-3">
+                <label>Subject</label>
+                <select class="form-select">
+                    <option>Math</option>
+                    <option>Science</option>
+                </select>
+            </div>
+            <button class="btn btn-primary w-100" onclick="alert('Saved!')">Save</button>
+        </div>
+    </div>
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        const f = JSON.parse(localStorage.getItem('faculty_v1') || '[]').find(x => x.id === id);
+        if (f) document.getElementById('fname').innerText = f.name;
+    </script>
+</body>
+
+</html>

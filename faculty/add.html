@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add New Faculty</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: #334155;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-heading);
+        }
+
+        .main-card {
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.05);
+            background: var(--surface-color);
+            overflow: hidden;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            border-color: #e2e8f0;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #fff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-light {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #64748b;
+        }
+
+        .btn-light:hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+    </style>
+</head>
+
+<body class="py-5 px-3">
+    <div class="container" style="max-width: 700px;">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4">
+            <a href="../faculty.html" class="btn btn-light me-3 shadow-sm"><i class="bi bi-arrow-left"></i></a>
+            <div>
+                <h2 class="fw-bold mb-0 text-dark">Add New Faculty</h2>
+                <p class="text-muted mb-0 small">Enter the details to register a new staff member.</p>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="main-card p-4 p-md-5">
+            <form id="addFacultyForm">
+                <div class="row g-4">
+                    <!-- Personal Info -->
+                    <div class="col-12">
+                        <h6 class="text-uppercase text-muted fw-bold small mb-3"><i
+                                class="bi bi-person-vcard me-2"></i>Personal Information</h6>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="facultyName" required
+                            placeholder="e.g. Dr. Sarah Connor">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="facultyEmail" required
+                            placeholder="sarah@university.edu">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="facultyPhone" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <!-- Academic Info -->
+                    <div class="col-12 mt-4">
+                        <h6 class="text-uppercase text-muted fw-bold small mb-3"><i
+                                class="bi bi-mortarboard me-2"></i>Academic Details</h6>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Department / Subject</label>
+                        <input type="text" class="form-control" id="facultySubject" required
+                            placeholder="e.g. Computer Science">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Role / Designation</label>
+                        <select class="form-select" id="facultyRole">
+                            <option value="Professor">Professor</option>
+                            <option value="Assistant Professor">Assistant Professor</option>
+                            <option value="Lecturer">Lecturer</option>
+                            <option value="Visiting Faculty">Visiting Faculty</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary w-100 py-3">
+                            <i class="bi bi-check-lg me-2"></i>Register Faculty Member
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addFacultyForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const newFaculty = {
+                id: Date.now().toString(),
+                name: document.getElementById('facultyName').value,
+                email: document.getElementById('facultyEmail').value,
+                phone: document.getElementById('facultyPhone').value,
+                subject: document.getElementById('facultySubject').value,
+                role: document.getElementById('facultyRole').value,
+                joinedDate: new Date().toLocaleDateString()
+            };
+
+            const list = JSON.parse(localStorage.getItem('faculty_v1') || '[]');
+            list.push(newFaculty);
+            localStorage.setItem('faculty_v1', JSON.stringify(list));
+
+            // Show success feedback (simple for now)
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Saved Successfully!';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-success');
+
+            setTimeout(() => {
+                window.location.href = 'list.html';
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>
