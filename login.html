@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <!-- Role Selection (Demo) 
+        <!-- Role Selection (Demo) -->
         <div class="form-group">
           <label class="form-label" for="role">Login As</label>
           <select id="role" class="form-input" style="cursor: pointer;">
@@ -55,7 +55,7 @@
             <option value="Admin">👨‍💼 Admin (Can view User List)</option>
             <option value="Professor">👨‍🏫 Professor</option>
           </select>
-        </div>-->
+        </div>
 
         <!-- Remember & Forgot -->
         <div class="form-row">
@@ -138,12 +138,8 @@
           localStorage.setItem('rememberMe', 'true');
         }
 
-        // Redirect based on role - Admins go to user list, others to profile
-        if (selectedRole === 'Admin') {
-          window.location.href = 'users.html';
-        } else {
-          window.location.href = 'profile.html';
-        }
+        // Redirect to home page after login
+        window.location.href = 'home.html';
       }, 1500);
     }
 
@@ -151,8 +147,8 @@
     window.onload = function () {
       const user = localStorage.getItem('user');
       if (user) {
-        // Already logged in, redirect
-        // window.location.href = 'profile.html';
+        // Already logged in, redirect to home
+        window.location.href = 'home.html';
       }
     };
   </script>
