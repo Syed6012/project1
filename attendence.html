@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Attendance Visibility</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{font-family:Arial;margin:20px;background:#f5f7fa}
+    table{width:100%;border-collapse:collapse;margin:18px 0;background:#fff}
+    th,td{padding:10px;border:1px solid #ddd;text-align:center}
+    th{background:#f0f0f0}
+    .box{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:20px}
+  </style>
+</head>
+<body>
+
+<h2>Attendance Summary</h2>
+
+<div class="box">
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Classes Attended</th>
+    <th>Total Classes</th>
+    <th>Percentage (%)</th>
+  </tr>
+  <tr><td>Java</td><td>18</td><td>24</td><td>75%</td></tr>
+  <tr><td>DS</td><td>16</td><td>22</td><td>72.7%</td></tr>
+  <tr><td>OS</td><td>20</td><td>26</td><td>76.9%</td></tr>
+  <tr><td>English</td><td>14</td><td>20</td><td>70%</td></tr>
+</table>
+</div>
+
+<div class="box">
+<h3 style="text-align:center">Attendance Pie Chart</h3>
+<canvas id="pieChart" height="120" style="max-width:300px;margin:auto;display:block;"></canvas>
+</div>
+
+<div class="box">
+<h3>Classes Required for 75% Attendance</h3>
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Current %</th>
+    <th>Classes Needed for 75%</th>
+  </tr>
+  <tr><td>Java</td><td>75%</td><td>0</td></tr>
+  <tr><td>DS</td><td>72.7%</td><td>1</td></tr>
+  <tr><td>OS</td><td>76.9%</td><td>0</td></tr>
+  <tr><td>English</td><td>70%</td><td>2</td></tr>
+</table>
+</div>
+
+<script>
+const data = {
+  labels: ['Java', 'DS', 'OS', 'English'],
+  datasets: [{
+    data: [75, 72.7, 76.9, 70],
+  }]
+};
+new Chart(document.getElementById('pieChart'), {
+  type: 'pie',
+  data: data
+});
+</script>
+
+</body>
+</html>
