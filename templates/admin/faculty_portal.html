@@ -240,7 +240,7 @@
     <nav class="navbar navbar-expand-lg sticky-top mb-5">
         <div class="container">
             <!-- Brand Logo -->
-            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="{{ url_for('admin.dashboard') }}">
                 <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
                 <div class="d-flex flex-column">
                     <span class="fw-bold fs-6 text-dark">Faculty Portal</span>
@@ -285,7 +285,8 @@
                     </div>
                     <p class="text-muted">Register new faculty members, assign roles, and set up their profiles.</p>
                     <!-- Link to the Add Faculty Page -->
-                    <a href="faculty/add.html" class="btn btn-primary w-100 mt-auto">Add New Faculty</a>
+                    <a href="{{ url_for('admin.faculty_add') }}" class="btn btn-primary w-100 mt-auto">Add New
+                        Faculty</a>
                 </div>
             </div>
 
@@ -301,7 +302,8 @@
                     </div>
                     <p class="text-muted">View, manage, and edit existing faculty members and their schedules.</p>
                     <!-- Link to the List Page -->
-                    <a href="faculty/list.html" class="btn btn-outline-dark w-100 mt-auto">View Directory</a>
+                    <a href="{{ url_for('admin.faculty_list') }}" class="btn btn-outline-dark w-100 mt-auto">View
+                        Directory</a>
                 </div>
             </div>
 
@@ -318,12 +320,12 @@
         <!-- Hidden Options (Reveal on Hover) -->
         <div class="fab-options">
             <!-- Option 1: Remove Faculty -->
-            <a href="faculty/list.html" class="fab-option btn btn-danger shadow-sm">
+            <a href="{{ url_for('admin.faculty_list') }}" class="fab-option btn btn-danger shadow-sm">
                 <i class="bi bi-person-dash"></i>
                 <span class="fab-label">Remove Faculty</span>
             </a>
             <!-- Option 2: Add Faculty -->
-            <a href="faculty/add.html" class="fab-option btn btn-primary shadow-sm">
+            <a href="{{ url_for('admin.faculty_add') }}" class="fab-option btn btn-primary shadow-sm">
                 <i class="bi bi-person-plus"></i>
                 <span class="fab-label">Add Faculty</span>
             </a>

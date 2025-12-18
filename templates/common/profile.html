@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
         /* Attendance & Marks Dashboard Styles */
         .dashboard-grid {
@@ -514,15 +514,15 @@
 
     <!-- Header with Profile Corner -->
     <header class="header">
-        <a href="profile.html" class="logo">
+        <a href="{{ url_for('common.profile') }}" class="logo">
             <div class="logo-icon">🎓</div>
             <span class="logo-text">DeptPortal</span>
         </a>
 
         <nav>
             <ul class="nav-links">
-                <li><a href="profile.html" class="active">My Profile</a></li>
-                <li><a href="users.html">Users</a></li>
+                <li><a href="{{ url_for('common.profile') }}" class="active">My Profile</a></li>
+                <li><a href="{{ url_for('admin.users') }}">Users</a></li>
             </ul>
         </nav>
 
@@ -538,7 +538,7 @@
             </button>
 
             <div class="profile-dropdown">
-                <a href="profile.html" class="dropdown-item">
+                <a href="{{ url_for('common.profile') }}" class="dropdown-item">
                     <span>👤</span>
                     <span>My Profile</span>
                 </a>
@@ -999,7 +999,7 @@
         function handleLogout(event) {
             event.preventDefault();
             localStorage.removeItem('user');
-            window.location.href = 'login.html';
+            window.location.href = "{{ url_for('auth.login') }}";
         }
 
         // Initialize on load

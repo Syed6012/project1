@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
         /* Home Page Specific Styles */
         .home-hero {
@@ -378,16 +378,16 @@
 
     <!-- Header with Profile Corner -->
     <header class="header">
-        <a href="home.html" class="logo">
+        <a href="{{ url_for('common.home') }}" class="logo">
             <div class="logo-icon">🎓</div>
             <span class="logo-text">DeptPortal</span>
         </a>
 
         <nav>
             <ul class="nav-links">
-                <li><a href="home.html" class="active">Home</a></li>
-                <li><a href="profile.html">My Profile</a></li>
-                <li><a href="users.html">Users</a></li>
+                <li><a href="{{ url_for('common.home') }}" class="active">Home</a></li>
+                <li><a href="{{ url_for('common.profile') }}">My Profile</a></li>
+                <li><a href="{{ url_for('admin.users') }}">Users</a></li>
             </ul>
         </nav>
 
@@ -403,7 +403,7 @@
             </button>
 
             <div class="profile-dropdown">
-                <a href="profile.html" class="dropdown-item">
+                <a href="{{ url_for('common.profile') }}" class="dropdown-item">
                     <span>👤</span>
                     <span>My Profile</span>
                 </a>
@@ -469,7 +469,7 @@
                     <h2 class="section-title">Academics</h2>
                 </div>
                 <div class="menu-grid">
-                    <a href="profile.html" class="menu-card profile">
+                    <a href="{{ url_for('common.profile') }}" class="menu-card profile">
                         <div class="menu-card-icon">👤</div>
                         <h3 class="menu-card-title">My Profile</h3>
                         <p class="menu-card-desc">View and manage your personal information, academic details, and
@@ -477,7 +477,7 @@
                         <div class="menu-card-arrow">→</div>
                     </a>
 
-                    <a href="profile.html#attendance" class="menu-card attendance">
+                    <a href="{{ url_for('common.profile') }}#attendance" class="menu-card attendance">
                         <div class="menu-card-icon">📊</div>
                         <h3 class="menu-card-title">Attendance</h3>
                         <p class="menu-card-desc">Track your attendance records, view subject-wise breakdowns, and
@@ -485,7 +485,7 @@
                         <div class="menu-card-arrow">→</div>
                     </a>
 
-                    <a href="profile.html#marks" class="menu-card marks">
+                    <a href="{{ url_for('common.profile') }}#marks" class="menu-card marks">
                         <div class="menu-card-icon">📈</div>
                         <h3 class="menu-card-title">Marks & Results</h3>
                         <p class="menu-card-desc">Check your academic performance, semester grades, CGPA, and result
@@ -566,7 +566,7 @@
                         <div class="menu-card-arrow">→</div>
                     </a>
 
-                    <a href="users.html" class="menu-card profile">
+                    <a href="{{ url_for('admin.users') }}" class="menu-card profile">
                         <div class="menu-card-icon">👥</div>
                         <h3 class="menu-card-title">Directory</h3>
                         <p class="menu-card-desc">Find faculty members, students, and department contacts.</p>
@@ -577,7 +577,7 @@
 
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <a href="profile.html" class="quick-action-btn">
+                <a href="{{ url_for('common.profile') }}" class="quick-action-btn">
                     <span class="action-icon">📊</span>
                     <span>View Attendance</span>
                 </a>
@@ -617,7 +617,7 @@
             event.preventDefault();
             localStorage.removeItem('user');
             localStorage.removeItem('rememberMe');
-            window.location.href = 'login.html';
+            window.location.href = "{{ url_for('auth.login') }}";
         }
 
         // Load user data and populate the page
@@ -644,7 +644,7 @@
             const userData = localStorage.getItem('user');
             if (!userData) {
                 // Redirect to login if not logged in
-                window.location.href = 'login.html';
+                window.location.href = "{{ url_for('auth.login') }}";
                 return;
             }
             loadUserData();
